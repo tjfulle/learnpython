@@ -2,3 +2,8 @@
 .DS_Store
 temp.tex
 temp.md
+*.pyc
+wc.py
+captions.db.db
+captions.db
+output.txt
