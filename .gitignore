@@ -1,4 +1,5 @@
 .ipynb_checkpoints/*
+nb/.ipynb_checkpoints/*
 .DS_Store
 temp.tex
 temp.md
