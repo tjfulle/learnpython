@@ -1,3 +1,5 @@
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+
 # Classes and methods
 
 Code examples from this chapter are available from
@@ -5,7 +7,7 @@ Code examples from this chapter are available from
 
 ## Object-oriented features
 
-Python is an **object-oriented programming language**, which means that it provides features that support object-oriented programming.
+Python is an [object-oriented programming language](glossary.ipynb#object_oriented_language), which means that it provides features that support object-oriented programming.
 
 It is not easy to define object-oriented programming, but we have already seen some of its characteristics:
 
@@ -37,13 +39,13 @@ In the next few sections, we will take the functions from the previous two chapt
 
 ## Printing objects
 
-In Chapter [time], we defined a class named ``Time`` and in Exercise [ex.printtime], you wrote a function named `print_time`:
+In [Time](classes_and_functions.ipynb), we defined a class named ``Time`` and wrote a function named `print_time`:
 
-    class Time(object):
-        """Represents the time of day."""
+class Time(object):
+    """Represents the time of day."""
 
-    def print_time(time):
-        print '%.2d:%.2d:%.2d' % (time.hour, time.minute, time.second)
+def print_time(time):
+    print '%.2d:%.2d:%.2d' % (time.hour, time.minute, time.second)
 
 To call this function, you have to pass a ``Time`` object as an argument:
 
@@ -52,25 +54,22 @@ start.hour = 9
 start.minute = 45
 start.second = 00
 print_time(start)
-    09:45:00
 
 To make `print_time` a method, all we have to do is move the function definition inside the class definition. Notice the change in indentation.
 
-    class Time(object):
-        def print_time(time):
-            print '%.2d:%.2d:%.2d' % (time.hour, time.minute, time.second)
+class Time(object):
+    def print_time(time):
+        print '%.2d:%.2d:%.2d' % (time.hour, time.minute, time.second)
 
 Now there are two ways to call `print_time`. The first (and less common) way is to use function syntax:
 
 Time.print_time(start)
-    09:45:00
 
 In this use of dot notation, ``Time`` is the name of the class, and `print_time` is the name of the method. ``start`` is passed as a parameter.
 
 The second (and more concise) way is to use method syntax:
 
 start.print_time()
-    09:45:00
 
 In this use of dot notation, `print_time` is the name of the method
 (again), and ``start`` is the object the method is invoked on, which is called the [subject](glossary.ipynb#subject). Just as the subject of a sentence is what the sentence is about, the subject of a method invocation is what the method is about.
@@ -79,9 +78,9 @@ Inside the method, the subject is assigned to the first parameter, so in this ca
 
 By convention, the first parameter of a method is called ``self``, so it would be more common to write `print_time` like this:
 
-    class Time(object):
-        def print_time(self):
-            print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
+class Time(object):
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 The reason for this convention is an implicit metaphor:
 
@@ -95,52 +94,57 @@ The reason for this convention is an implicit metaphor:
 
 This change in perspective might be more polite, but it is not obvious that it is useful. In the examples we have seen so far, it may not be. But sometimes shifting responsibility from the functions onto the objects makes it possible to write more versatile functions, and makes it easier to maintain and reuse code.
 
-[convert]
-
-Rewrite `time_to_int` (from Section [prototype]) as a method. It is probably not appropriate to rewrite `int_to_time` as a method; what object you would invoke it on?
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Rewrite `time_to_int` (from [Prototyping](classes_and_functions.ipynb#prototype)) as a method. It is probably not appropriate to rewrite `int_to_time` as a method; what object you would invoke it on?</div>
 
 ## Another example
 
-Here’s a version of ``increment`` (from Section [increment]) rewritten as a method:
+Here’s a version of ``increment`` (from [Modifiers](classes_and_functions.ipynb#increment)) rewritten as a method:
 
-    # inside class Time:
+class Time(object):
+    # new increment method
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
 
-        def increment(self, seconds):
-            seconds += self.time_to_int()
-            return int_to_time(seconds)
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
-This version assumes that `time_to_int` is written as a method, as in Exercise [convert]. Also, note that it is a pure function, not a modifier.
+This version assumes that `time_to_int` is written as a method. Also, note that it is a pure function, not a modifier.
 
 Here’s how you would invoke ``increment``:
 
 start.print_time()
-    09:45:00
+
 end = start.increment(1337)
 end.print_time()
-    10:07:17
 
 The subject, ``start``, gets assigned to the first parameter, ``self``. The argument, ``1337``, gets assigned to the second parameter, ``seconds``.
 
 This mechanism can be confusing, especially if you make an error. For example, if you invoke ``increment`` with two arguments, you get:
 
 end = start.increment(1337, 460)
-    TypeError: increment() takes exactly 2 arguments (3 given)
 
 The error message is initially confusing, because there are only two arguments in parentheses. But the subject is also considered an argument, so all together that’s three.
 
 ## A more complicated example
 
-`is_after` (from Exercise [isafter]) is slightly more complicated because it takes two Time objects as parameters. In this case it is conventional to name the first parameter ``self`` and the second parameter ``other``:
+`is_after` is slightly more complicated because it takes two Time objects as parameters. In this case it is conventional to name the first parameter ``self`` and the second parameter ``other``:
 
-    # inside class Time:
+class Time(object):
+    # new is_after method
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
 
-        def is_after(self, other):
-            return self.time_to_int() > other.time_to_int()
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 To use this method, you have to invoke it on one object and pass the other as an argument:
 
 end.is_after(start)
-    True
 
 One nice thing about this syntax is that it almost reads like English:
 “end is after start?”
@@ -150,16 +154,25 @@ One nice thing about this syntax is that it almost reads like English:
 The init method (short for “initialization”) is a special method that gets invoked when an object is instantiated. Its full name is `__init__`
 (two underscore characters, followed by ``init``, and then two more underscores). An init method for the ``Time`` class might look like this:
 
-    # inside class Time:
+class Time(object):
+    # new __init__ method
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
 
-        def __init__(self, hour=0, minute=0, second=0):
-            self.hour = hour
-            self.minute = minute
-            self.second = second
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
+
 
 It is common for the parameters of `__init__` to have the same names as the attributes. The statement
 
-            self.hour = hour
+    self.hour = hour
 
 stores the value of the parameter ``hour`` as an attribute of ``self``.
 
@@ -167,151 +180,229 @@ The parameters are optional, so if you call ``Time`` with no arguments, you get 
 
 time = Time()
 time.print_time()
-    00:00:00
 
 If you provide one argument, it overrides ``hour``:
 
 time = Time (9)
 time.print_time()
-    09:00:00
 
 If you provide two arguments, they override ``hour`` and ``minute``.
 
 time = Time(9, 45)
 time.print_time()
-    09:45:00
 
 And if you provide three arguments, they override all three default values.
 
-Write an init method for the ``Point`` class that takes ``x`` and ``y`` as optional parameters and assigns them to the corresponding attributes.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write an init method for the ``Point`` class that takes ``x`` and ``y`` as optional parameters and assigns them to the corresponding attributes.</div>
 
-## The ``\_\_str\_\_`` method
+## The ``__str__`` method
 
 `__str__` is a special method, like `__init__`, that is supposed to return a string representation of an object.
 
 For example, here is a ``str`` method for Time objects:
 
-    # inside class Time:
+class Time(object):
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
 
-        def __str__(self):
-            return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
+    # new __str__ method
+    def __str__(self):
+        return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
+
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 When you ``print`` an object, Python invokes the ``str`` method:
 
 time = Time(9, 45)
 print time
-    09:45:00
 
 When I write a new class, I almost always start by writing `__init__`, which makes it easier to instantiate objects, and `__str__`, which is useful for debugging.
 
-Write a ``str`` method for the ``Point`` class. Create a Point object and print it.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write a ``str`` method for the ``Point`` class. Create a Point object and print it.</div>
 
-## Operator overloading 
+## Operator overloading
 
 By defining other special methods, you can specify the behavior of operators on user-defined types. For example, if you define a method named `__add__` for the ``Time`` class, you can use the ``+`` operator on Time objects.
 
 Here is what the definition might look like:
 
-    # inside class Time:
+class Time(object):
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+    def __str__(self):
+        return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
-        def __add__(self, other):
-            seconds = self.time_to_int() + other.time_to_int()
-            return int_to_time(seconds)
+    # new __add__ method
+    def __add__(self, other):
+        seconds = self.time_to_int() + other.time_to_int()
+        return int_to_time(seconds)
+
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 And here is how you could use it:
 
 start = Time(9, 45)
 duration = Time(1, 35)
 print start + duration
-    11:20:00
 
 When you apply the ``+`` operator to Time objects, Python invokes `__add__`. When you print the result, Python invokes `__str__`. So there is quite a lot happening behind the scenes!
 
 Changing the behavior of an operator so that it works with user-defined types is called [operator overloading](glossary.ipynb#operator_overloading). For every operator in Python there is a corresponding special method, like `__add__`. For more details, see
 <http://docs.python.org/2/reference/datamodel.html#specialnames>.
 
-Write an ``add`` method for the Point class.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write an ``add`` method for the Point class.</div>
 
 ## Type-based dispatch
 
 In the previous section we added two Time objects, but you also might want to add an integer to a Time object. The following is a version of `__add__` that checks the type of ``other`` and invokes either `add_time` or ``increment``:
 
-    # inside class Time:
+class Time(object):
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
 
-        def __add__(self, other):
-            if isinstance(other, Time):
-                return self.add_time(other)
-            else:
-                return self.increment(other)
+    def __str__(self):
+        return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
-        def add_time(self, other):
-            seconds = self.time_to_int() + other.time_to_int()
-            return int_to_time(seconds)
+    # new __add__ method
+    def __add__(self, other):
+        if isinstance(other, Time):
+            return self.add_time(other)
+        else:
+            return self.increment(other)
 
-        def increment(self, seconds):
-            seconds += self.time_to_int()
-            return int_to_time(seconds)
+    def add_time(self, other):
+        seconds = self.time_to_int() + other.time_to_int()
+        return int_to_time(seconds)
+
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
+
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 The built-in function ``isinstance`` takes a value and a class object, and returns ``True`` if the value is an instance of the class.
 
-If ``other`` is a Time object, `__add__` invokes `add_time`. Otherwise it assumes that the parameter is a number and invokes ``increment``. This operation is called a ``**type-based dispatch**`` because it dispatches the computation to different methods based on the type of the arguments.
+If ``other`` is a Time object, `__add__` invokes `add_time`. Otherwise it assumes that the parameter is a number and invokes ``increment``. This operation is called a [type-based dispatch](glossary.ipynb#typebased_dispatch) because it dispatches the computation to different methods based on the type of the arguments.
 
 Here are examples that use the ``+`` operator with different types:
 
 start = Time(9, 45)
 duration = Time(1, 35)
 print start + duration
-    11:20:00
+
 print start + 1337
-    10:07:17
 
 Unfortunately, this implementation of addition is not commutative. If the integer is the first operand, you get
 
 print 1337 + start
-    TypeError: unsupported operand type(s) for +: 'int' and 'instance'
 
 The problem is, instead of asking the Time object to add an integer, Python is asking an integer to add a Time object, and it doesn’t know how to do that. But there is a clever solution for this problem: the special method `__radd__`, which stands for “right-side add.” This method is invoked when a Time object appears on the right side of the ``+`` operator. Here’s the definition:
 
-    # inside class Time:
+class Time(object):
+    def __init__(self, hour=0, minute=0, second=0):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
 
-        def __radd__(self, other):
-            return self.__add__(other)
+    def __str__(self):
+        return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
+
+    def __add__(self, other):
+        if isinstance(other, Time):
+            return self.add_time(other)
+        else:
+            return self.increment(other)
+
+    # new __radd__ method
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def add_time(self, other):
+        seconds = self.time_to_int() + other.time_to_int()
+        return int_to_time(seconds)
+
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+
+    def is_after(self, other):
+        return self.time_to_int() > other.time_to_int()
+
+    def increment(self, seconds):
+        seconds += self.time_to_int()
+        return int_to_time(seconds)
+
+    def print_time(self):
+        print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
 And here’s how it’s used:
 
 print 1337 + start
-    10:07:17
 
-Write an ``add`` method for Points that works with either a Point object or a tuple:
-
--   If the second operand is a Point, the method should return a new
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write an ``add`` method for Points that works with either a Point object or a tuple:<p>
+<ul>
+  <li>
+    If the second operand is a Point, the method should return a new
     Point whose $x$ coordinate is the sum of the $x$ coordinates of the
     operands, and likewise for the $y$ coordinates.
-
--   If the second operand is a tuple, the method should add the first
+  </li>
+  <li>
+    If the second operand is a tuple, the method should add the first
     element of the tuple to the $x$ coordinate and the second element to
     the $y$ coordinate, and return a new Point with the result.
+  </li>
+</ul>
+</div>
 
 ## Polymorphism
 
 Type-based dispatch is useful when it is necessary, but (fortunately) it is not always necessary. Often you can avoid it by writing functions that work correctly for arguments with different types.
 
-Many of the functions we wrote for strings will actually work for any kind of sequence. For example, in Section [histogram] we used ``histogram`` to count the number of times each letter appears in a word.
+Many of the functions we wrote for strings will actually work for any kind of sequence. For example, in [Dictionaries as counters](dictionaries.ipynb#histogram) we used ``histogram`` to count the number of times each letter appears in a word.
 
-    def histogram(s):
-        d = dict()
-        for c in s:
-            if c not in d:
-                d[c] = 1
-            else:
-                d[c] = d[c]+1
-        return d
+def histogram(s):
+    d = dict()
+    for c in s:
+        if c not in d:
+            d[c] = 1
+        else:
+            d[c] = d[c]+1
+    return d
 
 This function also works for lists, tuples, and even dictionaries, as long as the elements of ``s`` are hashable, so they can be used as keys in ``d``.
 
 t = ['spam', 'egg', 'spam', 'spam', 'bacon', 'spam']
 histogram(t)
-    {'bacon': 1, 'egg': 1, 'spam': 4}
 
 Functions that can work with several types are called [polymorphic](glossary.ipynb#polymorphic). Polymorphism can facilitate code reuse. For example, the built-in function ``sum``, which adds the elements of a sequence, works as long as the elements of the sequence support addition.
 
@@ -322,7 +413,6 @@ t2 = Time(7, 41)
 t3 = Time(7, 37)
 total = sum([t1, t2, t3])
 print total
-    23:01:00
 
 In general, if all of the operations inside a function work with a given type, then the function works with that type.
 
@@ -332,20 +422,19 @@ The best kind of polymorphism is the unintentional kind, where you discover that
 
 It is legal to add attributes to objects at any point in the execution of a program, but if you are a stickler for type theory, it is a dubious practice to have objects of the same type with different attribute sets. It is usually a good idea to initialize all of an object’s attributes in the init method.
 
-If you are not sure whether an object has a particular attribute, you can use the built-in function ``hasattr`` (see Section [hasattr]).
+If you are not sure whether an object has a particular attribute, you can use the built-in function ``hasattr``.
 
 Another way to access the attributes of an object is through the special attribute `__dict__`, which is a dictionary that maps attribute names
 (as strings) and values:
 
-p = Point(3, 4)
-print p.__dict__
-    {'y': 4, 'x': 3}
+t = Time()
+print t.__dict__
 
 For purposes of debugging, you might find it useful to keep this function handy:
 
-    def print_attributes(obj):
-        for attr in obj.__dict__:
-            print attr, getattr(obj, attr)
+def print_attributes(obj):
+    for attr in obj.__dict__:
+        print attr, getattr(obj, attr)
 
 `print_attributes` traverses the items in the object’s dictionary and prints each attribute name and its corresponding value.
 
@@ -369,6 +458,3 @@ But if you designed the interface carefully, you can change the implementation w
 
 Keeping the interface separate from the implementation means that you have to hide the attributes. Code in other parts of the program (outside the class definition) should use methods to read and modify the state of the object. They should not access the attributes directly. This principle is called [information hiding](glossary.ipynb#information_hiding); see
 <http://en.wikipedia.org/wiki/Information_hiding>.
-
-Download the code from this chapter
-(<http://thinkpython.com/code/Time2.py>). Change the attributes of ``Time`` to be a single integer representing seconds since midnight. Then modify the methods (and the function `int_to_time`) to work with the new implementation. You should not have to modify the test code in ``main``. When you are done, the output should be the same as before. Solution: <http://thinkpython.com/code/Time2_soln.py>

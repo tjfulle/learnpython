@@ -1,37 +1,36 @@
 <a name='time'></a>
-# Classes and functions 
+# Classes and functions
 
 Code examples from this chapter are available from
 <http://thinkpython.com/code/Time1.py>.
 
-Time 
+Time
 ----
 
 As another example of a user-defined type, we’ll define a class called ``Time`` that records the time of day. The class definition looks like this:
 
-    class Time(object):
-        """Represents the time of day.
-           
-        attributes: hour, minute, second
-        """
+class Time(object):
+    """Represents the time of day.
+
+    attributes: hour, minute, second
+    """
 
 We can create a new ``Time`` object and assign attributes for hours, minutes, and seconds:
 
-    time = Time()
-    time.hour = 11
-    time.minute = 59
-    time.second = 30
+time = Time()
+time.hour = 11
+time.minute = 59
+time.second = 30
 
-The state diagram for the ``Time`` object looks like Figure [fig.time].
+The state diagram for the ``Time`` object looks like <a href='#fig.time'>Figure 1</a>.
 
-[ex.printtime]
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write a function called `print_time` that takes a Time object and prints it in the form ``hour:minute:second``. Hint: the format sequence `'%.2d'` prints an integer using at least two digits, including a leading zero if necessary.</div>
 
-Write a function called `print_time` that takes a Time object and prints it in the form ``hour:minute:second``. Hint: the format sequence `'%.2d'` prints an integer using at least two digits, including a leading zero if necessary.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write a boolean function called `is_after` that takes two Time objects, ``t1`` and ``t2``, and returns ``True`` if ``t1`` follows ``t2`` chronologically and ``False`` otherwise. Challenge: don’t use an ``if`` statement.</div>
 
-[isafter]
-
-Write a boolean function called `is_after` that takes two Time objects, ``t1`` and ``t2``, and returns ``True`` if ``t1`` follows ``t2`` chronologically and ``False`` otherwise. Challenge: don’t use an ``if`` statement.
-
+<a name='fig.time'></a>
 <img src='figs/time.png'/>
 
 ## Pure functions
@@ -40,12 +39,12 @@ In the next few sections, we’ll write two functions that add time values. They
 
 Here is a simple prototype of `add_time`:
 
-    def add_time(t1, t2):
-        sum = Time()
-        sum.hour = t1.hour + t2.hour
-        sum.minute = t1.minute + t2.minute
-        sum.second = t1.second + t2.second
-        return sum
+def add_time(t1, t2):
+    sum = Time()
+    sum.hour = t1.hour + t2.hour
+    sum.minute = t1.minute + t2.minute
+    sum.second = t1.second + t2.second
+    return sum
 
 The function creates a new ``Time`` object, initializes its attributes, and returns a reference to the new object. This is called a [pure function](glossary.ipynb#pure_function) because it does not modify any of the objects passed to it as arguments and it has no effect, like displaying a value or getting user input, other than returning a value.
 
@@ -65,46 +64,45 @@ duration.second = 0
 
 done = add_time(start, duration)
 print_time(done)
-    10:80:00
 
 The result, ``10:80:00`` might not be what you were hoping for. The problem is that this function does not deal with cases where the number of seconds or minutes adds up to more than sixty. When that happens, we have to “carry” the extra seconds into the minute column or the extra minutes into the hour column.
 
 Here’s an improved version:
 
-    def add_time(t1, t2):
-        sum = Time()
-        sum.hour = t1.hour + t2.hour
-        sum.minute = t1.minute + t2.minute
-        sum.second = t1.second + t2.second
+def add_time(t1, t2):
+    sum = Time()
+    sum.hour = t1.hour + t2.hour
+    sum.minute = t1.minute + t2.minute
+    sum.second = t1.second + t2.second
 
-        if sum.second >= 60:
-            sum.second -= 60
-            sum.minute += 1
+    if sum.second >= 60:
+        sum.second -= 60
+        sum.minute += 1
 
-        if sum.minute >= 60:
-            sum.minute -= 60
-            sum.hour += 1
+    if sum.minute >= 60:
+        sum.minute -= 60
+        sum.hour += 1
 
-        return sum
+    return sum
 
 Although this function is correct, it is starting to get big. We will see a shorter alternative later.
 
-## Modifiers 
+## Modifiers
 
 Sometimes it is useful for a function to modify the objects it gets as parameters. In that case, the changes are visible to the caller. Functions that work this way are called [modifiers](glossary.ipynb#modifier).
 
 ``increment``, which adds a given number of seconds to a ``Time`` object, can be written naturally as a modifier. Here is a rough draft:
 
-    def increment(time, seconds):
-        time.second += seconds
+def increment(time, seconds):
+    time.second += seconds
 
-        if time.second >= 60:
-            time.second -= 60
-            time.minute += 1
+    if time.second >= 60:
+        time.second -= 60
+        time.minute += 1
 
-        if time.minute >= 60:
-            time.minute -= 60
-            time.hour += 1
+    if time.minute >= 60:
+        time.minute -= 60
+        time.hour += 1
 
 The first line performs the basic operation; the remainder deals with the special cases we saw before.
 
@@ -112,15 +110,17 @@ Is this function correct? What happens if the parameter ``seconds`` is much grea
 
 In that case, it is not enough to carry once; we have to keep doing it until ``time.second`` is less than sixty. One solution is to replace the ``if`` statements with ``while`` statements. That would make the function correct, but not very efficient.
 
-Write a correct version of ``increment`` that doesn’t contain any loops.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write a correct version of ``increment`` that doesn’t contain any loops.</div>
 
 Anything that can be done with modifiers can also be done with pure functions. In fact, some programming languages only allow pure functions. There is some evidence that programs that use pure functions are faster to develop and less error-prone than programs that use modifiers. But modifiers are convenient at times, and functional programs tend to be less efficient.
 
 In general, I recommend that you write pure functions whenever it is reasonable and resort to modifiers only if there is a compelling advantage. This approach might be called a ``[functional programming style](glossary.ipynb#functional_programming_style)``.
 
-Write a “pure” version of ``increment`` that creates and returns a new Time object rather than modifying the parameter.
+<div style="background-color: #FFFFFF; margin-right: 10px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px; padding-top: 8px; border: 2px solid black;">
+Write a “pure” version of ``increment`` that creates and returns a new Time object rather than modifying the parameter.</div>
 
-## Prototyping versus planning 
+## Prototyping versus planning
 
 The development plan I am demonstrating is called “prototype and patch.” For each function, I wrote a prototype that performed the basic calculation and then tested it, patching errors along the way.
 
@@ -136,26 +136,26 @@ This observation suggests another approach to the whole problem—we can convert
 
 Here is a function that converts Times to integers:
 
-    def time_to_int(time):
-        minutes = time.hour * 60 + time.minute
-        seconds = minutes * 60 + time.second
-        return seconds
+def time_to_int(time):
+    minutes = time.hour * 60 + time.minute
+    seconds = minutes * 60 + time.second
+    return seconds
 
 And here is the function that converts integers to Times (recall that ``divmod`` divides the first argument by the second and returns the quotient and remainder as a tuple).
 
-    def int_to_time(seconds):
-        time = Time()
-        minutes, time.second = divmod(seconds, 60)
-        time.hour, time.minute = divmod(minutes, 60)
-        return time
+def int_to_time(seconds):
+    time = Time()
+    minutes, time.second = divmod(seconds, 60)
+    time.hour, time.minute = divmod(minutes, 60)
+    return time
 
 You might have to think a bit, and run some tests, to convince yourself that these functions are correct. One way to test them is to check that `time_to_int(int_to_time(x)) == x` for many values of ``x``. This is an example of a consistency check.
 
 Once you are convinced they are correct, you can use them to rewrite `add_time`:
 
-    def add_time(t1, t2):
-        seconds = time_to_int(t1) + time_to_int(t2)
-        return int_to_time(seconds)
+def add_time(t1, t2):
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
 
 This version is shorter than the original, and easier to verify.
 
@@ -177,26 +177,26 @@ Requirements like these are called [invariants](glossary.ipynb#invariant) becaus
 
 Writing code to check your invariants can help you detect errors and find their causes. For example, you might have a function like `valid_time` that takes a Time object and returns ``False`` if it violates an invariant:
 
-    def valid_time(time):
-        if time.hour < 0 or time.minute < 0 or time.second < 0:
-            return False
-        if time.minute >= 60 or time.second >= 60:
-            return False
-        return True
+def valid_time(time):
+    if time.hour < 0 or time.minute < 0 or time.second < 0:
+        return False
+    if time.minute >= 60 or time.second >= 60:
+        return False
+    return True
 
 Then at the beginning of each function you could check the arguments to make sure they are valid:
 
-    def add_time(t1, t2):
-        if not valid_time(t1) or not valid_time(t2):
-            raise ValueError('invalid Time object in add_time')
-        seconds = time_to_int(t1) + time_to_int(t2)
-        return int_to_time(seconds)
+def add_time(t1, t2):
+    if not valid_time(t1) or not valid_time(t2):
+        raise ValueError('invalid Time object in add_time')
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
 
 Or you could use an ``assert`` statement, which checks a given invariant and raises an exception if it fails:
 
-    def add_time(t1, t2):
-        assert valid_time(t1) and valid_time(t2)
-        seconds = time_to_int(t1) + time_to_int(t2)
-        return int_to_time(seconds)
+def add_time(t1, t2):
+    assert valid_time(t1) and valid_time(t2)
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
 
 ``assert`` statements are useful because they distinguish code that deals with normal conditions from code that checks for errors.
