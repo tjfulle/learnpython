@@ -1,0 +1,7 @@
+- [Multiple Assignment](iteration.ipynb#multiple assignment)
+- [Infinite Loop](iteration.ipynb#infinite loop)
+- [Initialization](iteration.ipynb#initialization)
+- [Iteration](iteration.ipynb#iteration)
+- [Update](iteration.ipynb#update)
+- [Increment](iteration.ipynb#increment)
+- [Decrement](iteration.ipynb#decrement)
