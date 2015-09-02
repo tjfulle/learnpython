@@ -15,6 +15,7 @@ with open(slides, 'w') as fh:
 reveal = '--reveal-prefix "http://cdn.jsdelivr.net/reveal.js/2.6.2"'
 cmd = 'ipython nbconvert --to slides --post serve {0} {1}'.format(reveal, slides)
 try:
-    proc = subprocess.Popen(cmd, shell=True, preexec_fn=os.setsid)
+    proc = subprocess.Popen(cmd.split(), preexec_fn=os.setsid)
+    proc.wait()
 except KeyboardInterrupt:
     os.killpg(proc.pid, signal.SIGTERM)
