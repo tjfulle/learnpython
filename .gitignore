@@ -9,3 +9,5 @@ captions.db.db
 captions.db
 output.txt
 ThinkPython/*
+*_slides.ipynb
+*.slides.html
