@@ -11,3 +11,5 @@ output.txt
 ThinkPython/*
 *_slides.ipynb
 *.slides.html
+image/*
+image
