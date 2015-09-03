@@ -1,6 +1,0 @@
-- [Temporary Variable](fruitful_functions.ipynb#temporary variable)
-- [Guardian](fruitful_functions.ipynb#guardian)
-- [Incremental Development](fruitful_functions.ipynb#incremental development)
-- [Dead Code](fruitful_functions.ipynb#dead code)
-- [``None``](fruitful_functions.ipynb#``none``)
-- [Scaffolding](fruitful_functions.ipynb#scaffolding)

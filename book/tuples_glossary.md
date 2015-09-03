@@ -1,7 +1,0 @@
-- [Data Structure](tuples.ipynb#data structure)
-- [Gather](tuples.ipynb#gather)
-- [Tuple](tuples.ipynb#tuple)
-- [Dsu](tuples.ipynb#dsu)
-- [Tuple Assignment](tuples.ipynb#tuple assignment)
-- [Shape (Of A Data Structure)](tuples.ipynb#shape (of a data structure))
-- [Scatter](tuples.ipynb#scatter)

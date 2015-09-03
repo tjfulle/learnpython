@@ -1,5 +1,0 @@
-- [Override](case_study_data_structure_selection.ipynb#override)
-- [Default Value](case_study_data_structure_selection.ipynb#default value)
-- [Deterministic](case_study_data_structure_selection.ipynb#deterministic)
-- [Benchmarking](case_study_data_structure_selection.ipynb#benchmarking)
-- [Pseudorandom](case_study_data_structure_selection.ipynb#pseudorandom)

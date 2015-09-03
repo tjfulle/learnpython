@@ -1,6 +1,0 @@
-- [Pure Function](classes_and_functions.ipynb#pure function)
-- [Planned Development](classes_and_functions.ipynb#planned development)
-- [Functional Programming Style](classes_and_functions.ipynb#functional programming style)
-- [Invariant](classes_and_functions.ipynb#invariant)
-- [Modifier](classes_and_functions.ipynb#modifier)
-- [Prototype And Patch](classes_and_functions.ipynb#prototype and patch)

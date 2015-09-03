@@ -1,8 +1,0 @@
-- [Deep Copy](classes_and_objects.ipynb#deep copy)
-- [Instance](classes_and_objects.ipynb#instance)
-- [Attribute](classes_and_objects.ipynb#attribute)
-- [Object Diagram](classes_and_objects.ipynb#object diagram)
-- [Embedded (Object)](classes_and_objects.ipynb#embedded (object))
-- [Shallow Copy](classes_and_objects.ipynb#shallow copy)
-- [Class Object](classes_and_objects.ipynb#class object)
-- [Class](classes_and_objects.ipynb#class)
