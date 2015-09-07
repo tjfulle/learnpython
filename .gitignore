@@ -13,3 +13,4 @@ ThinkPython/*
 *.slides.html
 image/*
 image
+foo.*
