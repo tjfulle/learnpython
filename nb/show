@@ -1,21 +1,30 @@
-#!/usr/bin/env python
-import os
-import re
-import sys
-import signal
-import subprocess
-filename = sys.argv[1]
-root, ext = os.path.splitext(filename)
-lines = open(root + '.ipynb').read()
-regex = re.compile(r'<a.*?>.*?<\/a>')
-lines = regex.sub('', lines)
-slides = root + '_slides.ipynb'
-with open(slides, 'w') as fh:
-    fh.write(lines)
-reveal = '--reveal-prefix "http://cdn.jsdelivr.net/reveal.js/2.6.2"'
-cmd = 'ipython nbconvert --to slides --post serve {0} {1}'.format(reveal, slides)
-try:
-    proc = subprocess.Popen(cmd.split(), preexec_fn=os.setsid)
-    proc.wait()
-except KeyboardInterrupt:
-    os.killpg(proc.pid, signal.SIGTERM)
+#!/bin/bash
+
+# get directory of this script and set the path to the Python-2.7 directory
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+IPY_D=${DIR}/../Python-2.7
+
+# check that the Python-2.7 directory exists
+if [ ! -d "$IPY_D" ]; then
+    echo ${IPY_D} does not exist
+    exit
+fi
+
+# set the JUPYTER_CONFIG_DIR and IPYTHONDIR environment variables
+export JUPYTER_CONFIG_DIR=${IPY_D}
+export IPYTHONDIR=${IPY_D}
+
+# get the filename from the first argument to this script, extract its root
+# and extension
+filename=$(basename "$1")
+ext="${filename##*.}"
+root="${filename%.*}"
+
+# call the nbcnv.py script (fixes up the notebook for better slides)
+python nbcnv.py $filename
+
+# nvcnv.py adds _slides to the filename
+slides=${root}_slides.${ext}
+
+# launch the slides
+ipython nbconvert --to slides --post serve --reveal-prefix "http://cdn.jsdelivr.net/reveal.js/2.6.2" ${slides}
