@@ -7,7 +7,7 @@ temp.md
 wc.py
 captions.db.db
 captions.db
-output.txt
+aux/output.*
 ThinkPython/*
 *_slides.ipynb
 *.slides.html
