@@ -1,0 +1,14 @@
+2015-07-09 13:10:52.897 [IPControllerApp] Hub listening on tcp://127.0.0.1:57922 for registration.
+2015-07-09 13:10:52.899 [IPControllerApp] Hub using DB backend: 'NoDB'
+2015-07-09 13:10:53.154 [IPControllerApp] hub::created hub
+2015-07-09 13:10:53.155 [IPControllerApp] writing connection info to /Users/e63302/.ipython/profile_default/security/ipcontroller-client.json
+2015-07-09 13:10:53.155 [IPControllerApp] writing connection info to /Users/e63302/.ipython/profile_default/security/ipcontroller-engine.json
+2015-07-09 13:10:53.155 [IPControllerApp] task::using Python leastload Task scheduler
+2015-07-09 13:10:53.156 [IPControllerApp] Heartmonitor started
+2015-07-09 13:10:53.196 [IPControllerApp] Creating pid file: /Users/e63302/.ipython/profile_default/pid/ipcontroller.pid
+2015-07-09 13:10:53.207 [IPControllerApp] client::client '\x00\x80\x00A\xa7' requested u'connection_request'
+2015-07-09 13:10:53.207 [IPControllerApp] client::client ['\x00\x80\x00A\xa7'] connected
+2015-07-09 13:10:53.862 [IPControllerApp] client::client 'fa07ac56-f402-4968-99b2-bb0e452ee86e' requested u'registration_request'
+2015-07-09 13:10:53.949 [IPControllerApp] client::client 'bc52f40d-fc78-4394-afb0-197389570afe' requested u'registration_request'
+2015-07-09 13:10:56.603 [IPControllerApp] CRITICAL | Received signal 2, shutting down
+2015-07-09 13:10:56.603 [IPControllerApp] CRITICAL | terminating children...

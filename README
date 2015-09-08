@@ -3,4 +3,4 @@ WHAT IS THIS?
 
 Notebooks, scripts, and programs for learning the Python programming language.
 The content is meant to be viewed in IPython Notebook. To continue, launch a
-IPython Notebook server and open 00_Introduction.ipynb.
+IPython Notebook server using the launch.py script
