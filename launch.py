@@ -12,7 +12,7 @@ IPY_D = join(D, 'Python-2.7')
 env = dict(os.environ)
 env['JUPYTER_CONFIG_DIR'] = IPY_D
 env['IPYTHONDIR'] = IPY_D
-command = 'ipython notebook Introduction.ipynb'
+command = 'ipython notebook'
 kwds = {'env': env, 'shell': True}
 try:
     kwds['preexec_fn'] = os.setsid

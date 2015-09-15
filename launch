@@ -10,4 +10,4 @@ export JUPYTER_CONFIG_DIR=${IPY_D}
 export IPYTHONDIR=${IPY_D}
 
 # launch the Introduction notebook
-ipython notebook Introduction.ipynb
+ipython notebook
